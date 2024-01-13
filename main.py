@@ -4,7 +4,7 @@ from pprint import pprint
 import smtplib
 import os
 
-my_email = "testludemy@gmail.com"
+my_email = ""
 password = os.environ.get("PASSWORD")
 
 url = ("https://www.amazon.ca/dp/B0B8TC6KWF/ref=sspa_dk_detail_2?psc=1&pd_rd_i=B0B8TC6KWF&pd_rd_w=0z6rX&content-id"
@@ -28,13 +28,12 @@ title = soup.select_one(selector="#productTitle").text.strip()
 price = price.replace("$", "")
 price_fig = price.split(".")
 final_price = int(price_fig[0])
-# print(type(final_price))
-# print(title)
+
 
 if final_price < 200:
     with smtplib.SMTP("smtp.gmail.com", port=587) as new_connect:
         new_connect.starttls()
         message = f'Subject: Amazon Price Alert\n\nHello,\n\n{title} is now ${final_price}\n\n{url}'
         new_connect.login(user=my_email, password=password)
-        new_connect.sendmail(from_addr=my_email, to_addrs="ladyshark08@proton.me",
+        new_connect.sendmail(from_addr=my_email, to_addrs="",
                              msg=message)
